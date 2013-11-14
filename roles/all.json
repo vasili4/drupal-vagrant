@@ -1,0 +1,41 @@
+{
+    "name": "app",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "default_attributes": {
+        "mysql": {
+            "server_debian_password": "S!9YcNH!atI8", 
+            "server_root_password": "tiQbk1^wfH-A",
+            "server_repl_password": "y6)%F(IaW&Mg",
+            "bind_address": "127.0.0.1"
+        },
+        "nginx": {
+            "default_site_enabled": true
+        }
+    },
+    "description": "Application server",
+    "run_list": [    	
+        "recipe[vim]",
+        "recipe[man]",
+        "recipe[git]",
+        "recipe[drupal]"
+	],
+    "override_attributes": {
+        "php": {
+            "directives": {
+                "xdebug.remote_autostart": "off",
+                "xdebug.remote_enable": "on",
+                "xdebug.remote_handler": "dbgp",
+                "xdebug.remote_mode": "req",
+                "xdebug.remote_host": "192.168.34.1",
+                "xdebug.remote_port": "9000",
+                "xdebug.profiler_enable": "off",
+                "xdebug.profiler_enable_trigger": "on",
+                "date.timezone": "EST"
+            }
+        },
+        "apache": {
+            "listen_ports": [ "8080" ]
+        }
+    }
+}

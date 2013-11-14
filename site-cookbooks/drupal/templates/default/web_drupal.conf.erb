@@ -1,0 +1,16 @@
+<VirtualHost *:<%= @params[:port].nil? ? '80' : @params[:port] %>>
+    DocumentRoot <%= @params[:docroot] %>
+    ServerName <%= @params[:server_name] %>
+    ServerAlias <% @params[:server_aliases].each do |a| %><%= a %> <% end %>
+    ErrorLog /var/log/httpd/<%= @params[:server_name] %>-apache-error.log
+    CustomLog /var/log/httpd/<%= @params[:server_name] %>-apache-access.log combined
+
+    Alias "/css/" "<%= @params[:drupal_staticroot] %>/css/"
+    Alias "/img/" "<%= @params[:drupal_staticroot] %>/img/"
+    Alias "/js/" "<%= @params[:drupal_staticroot] %>/js/"
+    Alias "/images/" "<%= @params[:drupal_staticroot] %>/images/"
+
+    <Directory <%= @params[:docroot] %>>
+      AllowOverride All
+    </Directory>
+</VirtualHost>

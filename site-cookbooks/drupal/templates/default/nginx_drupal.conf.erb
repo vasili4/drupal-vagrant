@@ -1,0 +1,22 @@
+server
+{
+    listen  80;
+    server_name <%= @host %>;
+
+    client_max_body_size 64m;
+
+    access_log /var/log/nginx/<%= @host %>-access.log_log combined;
+    error_log /var/log/nginx/<%= @host %>-error.log_log;
+
+    location ~* ^.+.(gif|js|swf|jpg|jpeg|png|ico|css|bmp|txt)$ {
+        proxy_pass      http://apache_backend;
+        include         proxy_options.conf;
+    }
+
+    location /
+    {
+        access_log off;
+        proxy_pass         http://apache_backend;
+        include proxy_options.conf;
+    }
+}

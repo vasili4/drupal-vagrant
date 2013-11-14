@@ -1,0 +1,18 @@
+server {
+    listen 80;
+    server_name <%= @host %> www.<%= @host %>;
+
+    add_header Cache-Control public;
+
+    location ~* ^.+.(gif|js|swf|jpg|jpeg|png|ico|css|bmp|txt)$ {
+        proxy_pass      http://apache_backend;
+        include         proxy_options.conf;
+    }
+
+    location / {
+        access_log       /var/log/nginx/<%= @host %>-access.log main;
+        error_log       /var/log/nginx/<%= @host %>-error.log error;
+        proxy_pass      http://apache_backend;
+        include         proxy_options.conf;
+    }
+}
